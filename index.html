@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <meta name="description" content="The Roost — learn hacking and coding by doing it. Hands-on rooms, real-life missions, and certificates you earn with your hands, not your memory." />
+    <title>The Roost — Learn Hacking &amp; Coding by Doing It</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #070a08;
+        --bg-2: #0a0f0b;
+        --panel: #0d130e;
+        --panel-2: #10170f;
+        --line: #1e2b20;
+        --line-bright: #2c4631;
+        --ink: #e9f2ea;
+        --muted: #a3b8a6;
+        --faint: #71856f;
+        --green: #3dff7a;
+        --green-deep: #1fae4e;
+        --green-ink: #052b12;
+        --amber: #ffb648;
+        --c64-blue: #352879;
+        --c64-frame: #6c5eb5;
+        --c64-text: #a49ae0;
+        --radius: 10px;
+        --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        --sans: "IBM Plex Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(900px 500px at 85% -100px, rgba(61,255,122,.07), transparent 60%),
+          radial-gradient(700px 420px at -10% 30%, rgba(61,255,122,.04), transparent 60%),
+          var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 17px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection { background: var(--green); color: var(--green-ink); }
+      a { color: var(--green); }
+      button, input { font: inherit; }
+      button, [role="button"], summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.75rem; }
+
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+      section { padding: 84px 0 8px; }
+      .kicker {
+        font-family: var(--mono);
+        font-size: .8rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin: 0 0 14px;
+      }
+      .kicker::before { content: "> "; color: var(--faint); }
+      h2 {
+        font-size: clamp(1.7rem, 4.4vw, 2.5rem);
+        line-height: 1.15;
+        margin: 0 0 14px;
+        font-weight: 700;
+        letter-spacing: -.01em;
+      }
+      .lede { color: var(--muted); max-width: 62ch; margin: 0 0 34px; font-size: 1.05rem; }
+
+      /* ---------- HERO ---------- */
+      .hero { padding: 64px 0 30px; }
+      .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+      .brand {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: clamp(2.6rem, 7vw, 4.2rem);
+        letter-spacing: .02em;
+        line-height: 1;
+        margin: 0 0 10px;
+        color: var(--ink);
+      }
+      .brand .prompt { color: var(--green); }
+      .cursor {
+        display: inline-block; width: .55em; height: .95em; margin-left: .08em;
+        background: var(--green); vertical-align: -.08em;
+        animation: blink 1.1s steps(1) infinite;
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+      .tagline {
+        font-family: var(--mono);
+        font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+        color: var(--green);
+        margin: 0 0 30px;
+      }
+      .tagline strong { color: var(--ink); background: rgba(61,255,122,.14); padding: 0 .25em; }
+      .principle {
+        font-size: clamp(1.9rem, 5.2vw, 3.1rem);
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -.015em;
+        margin: 0 0 22px;
+      }
+      .principle em { font-style: normal; color: var(--green); }
+      .hero-sub { color: var(--muted); max-width: 56ch; margin: 0 0 34px; font-size: 1.06rem; }
+      .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+      .hero-note { color: var(--faint); font-size: .9rem; margin: 16px 0 0; font-family: var(--mono); }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        background: var(--green); color: var(--green-ink);
+        font-family: var(--mono); font-weight: 600; font-size: 1rem;
+        padding: 13px 26px; border: 0; border-radius: 6px;
+        text-decoration: none; cursor: pointer; min-height: 3rem;
+        transition: background .15s ease, transform .15s ease;
+      }
+      .btn:hover { background: #63ff92; }
+      .btn:active { transform: translateY(1px); }
+      .btn-ghost {
+        display: inline-flex; align-items: center; min-height: 3rem; padding: 13px 8px;
+        font-family: var(--mono); font-size: 1rem; color: var(--ink); text-decoration: none;
+      }
+      .btn-ghost span { border-bottom: 1px solid var(--line-bright); padding-bottom: 2px; }
+      .btn-ghost:hover span { border-color: var(--green); color: var(--green); }
+
+      /* terminal window (hero visual) */
+      .term {
+        background: #05070a;
+        border: 1px solid var(--line-bright);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(0,0,0,.55);
+        font-family: var(--mono);
+        font-size: .86rem;
+      }
+      .term-bar {
+        display: flex; align-items: center; gap: 7px;
+        background: #0c120d; border-bottom: 1px solid var(--line);
+        padding: 10px 14px;
+      }
+      .term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #26382a; display: block; }
+      .term-bar i:first-child { background: #3a2b2b; }
+      .term-bar b { font-weight: 500; color: var(--faint); font-size: .78rem; margin-left: 8px; }
+      .term-body { padding: 18px 18px 20px; line-height: 1.75; color: #c9d8ca; white-space: pre-wrap; word-break: break-word; }
+      .term-body .p { color: var(--green); }
+      .term-body .dim { color: var(--faint); }
+      .term-body .ok { color: var(--green); font-weight: 600; }
+      .term-body .warn { color: var(--amber); }
+
+      /* ---------- ROADS ---------- */
+      .roads-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .road {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 24px 22px 20px;
+        display: flex; flex-direction: column; gap: 10px;
+      }
+      .road.wide { grid-column: span 1; }
+      .road .num {
+        font-family: var(--mono); font-size: .78rem; color: var(--faint);
+        letter-spacing: .12em;
+      }
+      .road h3 { margin: 0; font-size: 1.22rem; line-height: 1.25; }
+      .road p { margin: 0; color: var(--muted); font-size: .97rem; flex: 1; }
+      .road .stops {
+        font-family: var(--mono); font-size: .76rem; color: var(--faint);
+        border-top: 1px dashed var(--line); padding-top: 10px; line-height: 1.7;
+      }
+      .road .stops b { color: var(--green); font-weight: 500; }
+
+      /* ---------- DIFFERENT ---------- */
+      .proof-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+      .proof {
+        display: grid; grid-template-columns: 64px 1fr; gap: 18px;
+        padding: 28px 4px; border-bottom: 1px solid var(--line);
+      }
+      .proof .idx {
+        font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--green);
+        line-height: 1.2;
+      }
+      .proof h3 { margin: 0 0 6px; font-size: 1.2rem; }
+      .proof p { margin: 0; color: var(--muted); max-width: 68ch; }
+      .proof p strong { color: var(--ink); }
+
+      /* ---------- FOUNDER / C64 ---------- */
+      .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+      .founder-grid p { color: var(--muted); margin: 0 0 16px; }
+      .founder-grid p strong { color: var(--ink); }
+      .c64 {
+        background: var(--c64-frame);
+        border-radius: 14px;
+        padding: 14px;
+        box-shadow: 0 24px 60px rgba(0,0,0,.55);
+      }
+      .c64-screen {
+        background: var(--c64-blue);
+        border-radius: 4px;
+        padding: 26px 22px 30px;
+        font-family: var(--mono);
+        color: var(--c64-text);
+        font-size: .92rem;
+        line-height: 1.7;
+        min-height: 300px;
+        text-transform: uppercase;
+      }
+      .c64-screen .center { text-align: center; }
+      .c64-screen .typed { color: #cfc8f5; }
+      .c64-cursor {
+        display: inline-block; width: .6em; height: 1em; background: var(--c64-text);
+        vertical-align: -.12em; animation: blink 1s steps(1) infinite;
+      }
+
+      /* ---------- TOP NAV ---------- */
+      .topnav {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px;
+        padding: 22px 0 0; font-family: var(--mono); font-size: .88rem;
+      }
+      .topnav a { color: var(--muted); text-decoration: none; min-height: auto; padding: 6px 0; }
+      .topnav a:hover { color: var(--green); }
+      .topnav a.nav-cta { color: var(--green); margin-left: auto; border: 1px solid var(--line-bright); border-radius: 6px; padding: 8px 14px; }
+      .topnav a.nav-cta:hover { border-color: var(--green); }
+
+      /* ---------- SCHOOLS ---------- */
+      .schools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .school-card {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 24px 22px 20px; display: flex; flex-direction: column; gap: 10px;
+      }
+      .school-card .num { font-family: var(--mono); font-size: .78rem; color: var(--faint); letter-spacing: .12em; }
+      .school-card h3 { margin: 0; font-size: 1.22rem; line-height: 1.25; }
+      .school-card p { margin: 0; color: var(--muted); font-size: .97rem; }
+      .school-card p strong { color: var(--ink); }
+      .pilot {
+        margin-top: 20px;
+        background: linear-gradient(180deg, var(--panel-2), var(--panel));
+        border: 1px solid var(--green-deep); border-radius: 14px;
+        padding: 32px 30px 28px;
+      }
+      .pilot .kicker { margin-bottom: 10px; }
+      .pilot h3 { margin: 0 0 10px; font-size: clamp(1.4rem, 3.4vw, 1.9rem); line-height: 1.2; }
+      .pilot > p { color: var(--muted); margin: 0 0 18px; max-width: 68ch; }
+      .pilot-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 34px; margin: 0 0 20px; }
+      .pilot-item { display: flex; gap: 12px; padding: 8px 0; align-items: flex-start; }
+      .pilot-item svg { flex: none; margin-top: 4px; }
+      .pilot-item p { margin: 0; color: var(--muted); font-size: .97rem; }
+      .pilot-item p strong { color: var(--ink); }
+      .pilot-line {
+        font-family: var(--mono); font-size: 1rem; color: var(--ink);
+        border-top: 1px dashed var(--line-bright); padding-top: 18px; margin: 0;
+      }
+      .pilot-line em { font-style: normal; color: var(--green); }
+      .edu-box {
+        background: var(--panel); border: 1px solid var(--line-bright); border-radius: 14px;
+        padding: 32px 30px 26px; margin-top: 20px;
+      }
+      .edu-box h3 { margin: 0 0 8px; font-size: 1.45rem; line-height: 1.2; }
+      .edu-box > p { color: var(--muted); margin: 0 0 22px; max-width: 62ch; }
+      .edu-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .edu-form .full { grid-column: 1 / -1; }
+      .edu-form label { font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 6px; }
+      .edu-form input, .edu-form select, .edu-form textarea {
+        width: 100%; background: #05070a; color: var(--ink);
+        border: 1px solid var(--line-bright); border-radius: 6px;
+        padding: 12px 14px; font-size: 1rem; font-family: var(--mono);
+      }
+      .edu-form textarea { font-family: var(--sans); min-height: 96px; resize: vertical; line-height: 1.5; }
+      .edu-form select { appearance: auto; }
+      .edu-form input:focus, .edu-form select:focus, .edu-form textarea:focus { outline: 2px solid var(--green-deep); outline-offset: 1px; border-color: var(--green); }
+      .edu-form .btn { justify-self: start; margin-top: 4px; }
+      .edu-error { color: #ff7a6b; font-size: .92rem; margin: 0; display: none; }
+      .edu-fine { color: var(--faint); font-size: .85rem; margin: 18px 0 0; }
+      .edu-done { display: none; }
+      .edu-done .big { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--green); margin: 0 0 8px; }
+      .edu-done p { color: var(--muted); margin: 0; }
+
+      /* ---------- PLEDGE ---------- */
+      .pledge {
+        background: linear-gradient(180deg, var(--panel-2), var(--panel));
+        border: 1px solid var(--line-bright);
+        border-radius: 14px;
+        padding: 36px 34px 30px;
+      }
+      .pledge h2 { margin-bottom: 8px; }
+      .pledge .lede { margin-bottom: 26px; }
+      .pledge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 34px; }
+      .pledge-item { display: flex; gap: 12px; padding: 10px 0; align-items: flex-start; }
+      .pledge-item svg { flex: none; margin-top: 4px; }
+      .pledge-item p { margin: 0; color: var(--muted); font-size: .99rem; }
+      .pledge-item p strong { color: var(--ink); display: block; font-size: 1.02rem; }
+
+      /* ---------- NUMBERS ---------- */
+      .numbers {
+        margin-top: 84px;
+        border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        background: var(--bg-2);
+      }
+      .numbers .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+      .stat { padding: 30px 18px 26px; text-align: center; border-left: 1px solid var(--line); }
+      .stat:first-child { border-left: 0; }
+      .stat .big { font-family: var(--mono); font-size: clamp(1.9rem, 4.5vw, 2.7rem); font-weight: 700; color: var(--green); line-height: 1; }
+      .stat .lbl { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+      /* ---------- WAITLIST ---------- */
+      .waitlist-box {
+        background: var(--panel);
+        border: 1px solid var(--line-bright);
+        border-radius: 14px;
+        padding: 38px 34px 30px;
+        max-width: 640px;
+      }
+      .waitlist-box h2 { margin-bottom: 10px; }
+      .waitlist-box > p { color: var(--muted); margin: 0 0 24px; }
+      .wl-form { display: grid; gap: 14px; }
+      .wl-form label { font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 6px; }
+      .wl-form input {
+        width: 100%;
+        background: #05070a; color: var(--ink);
+        border: 1px solid var(--line-bright); border-radius: 6px;
+        padding: 12px 14px; font-size: 1rem; font-family: var(--mono);
+      }
+      .wl-form input:focus { outline: 2px solid var(--green-deep); outline-offset: 1px; border-color: var(--green); }
+      .wl-form .btn { justify-self: start; margin-top: 4px; }
+      .wl-error { color: #ff7a6b; font-size: .92rem; margin: 0; display: none; }
+      .wl-fine { color: var(--faint); font-size: .85rem; margin: 18px 0 0; }
+      .wl-done { display: none; }
+      .wl-done .big {
+        font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--green); margin: 0 0 8px;
+      }
+      .wl-done p { color: var(--muted); margin: 0; }
+
+      /* ---------- FAQ ---------- */
+      .faq-list { max-width: 780px; }
+      details {
+        border: 1px solid var(--line); border-radius: var(--radius);
+        background: var(--panel); margin-bottom: 12px; overflow: hidden;
+      }
+      summary {
+        cursor: pointer; padding: 18px 20px; font-weight: 600; font-size: 1.05rem;
+        list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 14px;
+      }
+      summary::-webkit-details-marker { display: none; }
+      summary::after { content: "+"; font-family: var(--mono); color: var(--green); font-size: 1.3rem; line-height: 1; flex: none; }
+      details[open ] summary::after { content: "–"; }
+      details .a { padding: 0 20px 20px; color: var(--muted); }
+      details .a p { margin: 0; }
+      details .a strong { color: var(--ink); }
+
+      /* ---------- FOOTER ---------- */
+      footer { margin-top: 96px; border-top: 1px solid var(--line); background: var(--bg-2); padding: 44px 0 54px; }
+      footer .foot-brand { font-family: var(--mono); font-weight: 700; font-size: 1.15rem; margin: 0 0 10px; }
+      footer .foot-brand span { color: var(--green); }
+      footer p { color: var(--muted); margin: 0 0 8px; max-width: 60ch; }
+      footer .foot-principle { font-family: var(--mono); font-size: .88rem; color: var(--faint); margin-top: 18px; }
+      footer .foot-principle em { font-style: normal; color: var(--green); }
+      footer .disclaimer {
+        border: 1px solid var(--line); border-radius: var(--radius);
+        background: var(--panel); padding: 20px 22px; margin-top: 28px;
+      }
+      footer .disclaimer p { margin: 0; font-size: .88rem; line-height: 1.65; max-width: 78ch; }
+
+      /* ---------- RESPONSIVE ---------- */
+      @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+        .roads-grid { grid-template-columns: repeat(2, 1fr); }
+        .schools-grid { grid-template-columns: 1fr; }
+        .pilot-list { grid-template-columns: 1fr; }
+        .founder-grid { grid-template-columns: 1fr; }
+        .numbers .wrap { grid-template-columns: repeat(2, 1fr); }
+        .stat:nth-child(3) { border-left: 0; }
+        .stat { border-top: 1px solid var(--line); }
+        .stat:nth-child(-n+2) { border-top: 0; }
+      }
+      @media (max-width: 560px) {
+        body { font-size: 16px; }
+        section { padding-top: 64px; }
+        .roads-grid { grid-template-columns: 1fr; }
+        .proof { grid-template-columns: 44px 1fr; gap: 12px; }
+        .pledge { padding: 28px 22px 22px; }
+        .pledge-grid { grid-template-columns: 1fr; }
+        .pilot { padding: 26px 22px 22px; }
+        .edu-box { padding: 26px 22px 22px; }
+        .edu-form { grid-template-columns: 1fr; }
+        .edu-form .btn { width: 100%; }
+        .topnav a.nav-cta { margin-left: 0; }
+        .waitlist-box { padding: 28px 22px 24px; }
+        .waitlist-box .btn { width: 100%; }
+        .c64-screen { min-height: 260px; font-size: .82rem; padding: 20px 16px 24px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .cursor, .c64-cursor { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <div class="wrap">
+        <nav class="topnav" aria-label="Page sections">
+          <a href="#roads">Roads</a>
+          <a href="#different">How it&rsquo;s different</a>
+          <a href="#schools">For Schools</a>
+          <a href="#pledge">Our Pledge</a>
+          <a href="#faq">FAQ</a>
+          <a class="nav-cta" href="#waitlist">Join the waitlist</a>
+        </nav>
+      </div>
+      <div class="wrap hero-grid">
+        <div>
+          <h1 class="brand"><span class="prompt">&gt;</span> THE ROOST<span class="cursor" aria-hidden="true"></span></h1>
+          <p class="tagline">Learn hacking and coding by <strong>DOING</strong> it.</p>
+          <p class="principle">You don&rsquo;t pass by knowing.<br />You pass by <em>doing</em>.</p>
+          <p class="hero-sub">
+            Most platforms test whether you can recognize the right answer. The Roost makes you
+            fix the broken network, run the shift, and write the program — because in a real
+            interview and a real job, your hands are what get hired.
+          </p>
+          <div class="hero-ctas">
+            <a class="btn" href="#waitlist">Join the waitlist</a>
+            <a class="btn-ghost" href="#roads"><span>See the roads &darr;</span></a>
+          </div>
+          <p class="hero-note">For educational purposes only — practice happens in our fictional labs.</p>
+        </div>
+        <div class="term" aria-hidden="true">
+          <div class="term-bar"><i></i><i></i><i></i><b>roost — room: fix the broken rack</b></div>
+          <div class="term-body"><span class="p">learner@roost:~$</span> ping 192.168.1.10
+<span class="dim">PING 192.168.1.10 — 4 packets transmitted, 0 received</span>
+<span class="warn">✗ no route — check the gateway on PC-2</span>
+<span class="p">learner@roost:~$</span> open PC-2 → set gateway 192.168.1.1
+<span class="p">learner@roost:~$</span> ping 192.168.1.10
+<span class="dim">64 bytes from 192.168.1.10: time=0.4 ms</span>
+<span class="ok">✓ LINK GREEN — fault 3 of 3 fixed. Practical passed.</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ================= ROADS ================= -->
+      <section id="roads">
+        <div class="wrap">
+          <p class="kicker">Choose your road</p>
+          <h2>Pick your road first</h2>
+          <p class="lede">
+            Before you touch a single room, you see the whole map and choose where you&rsquo;re headed.
+            Your home screen lights up each stop behind you, marks where you are, and keeps the
+            destination in sight. Roads are a guide, not a fence — everything stays open, and you
+            can switch anytime.
+          </p>
+          <div class="roads-grid">
+            <article class="road">
+              <span class="num">ROAD 01</span>
+              <h3>SOC Analyst</h3>
+              <p>Triage real alerts, dig through logs, and contain an incident on a simulated shift — then prove it in a mock interview.</p>
+              <div class="stops">Foundations → Blue Team → <b>First Shift mission</b> → Certification → SOC interview</div>
+            </article>
+            <article class="road">
+              <span class="num">ROAD 02</span>
+              <h3>IT Help Desk</h3>
+              <p>Diagnose the broken machine, fix the user&rsquo;s actual problem, and write the ticket note that closes it clean.</p>
+              <div class="stops">Foundations → Troubleshooting rooms → <b>Hands-on Practical</b> → Help Desk interview</div>
+            </article>
+            <article class="road">
+              <span class="num">ROAD 03</span>
+              <h3>Network Technician</h3>
+              <p>Cable a rack port-to-port, set IPs, masks, and gateways, and watch the packet travel — then repair a rack with three planted faults.</p>
+              <div class="stops">Networking → <b>Server Room simulator</b> → Fix the Broken Rack → Network interview</div>
+            </article>
+            <article class="road">
+              <span class="num">ROAD 04</span>
+              <h3>Red Team &rarr; Purple Team</h3>
+              <p>Attack the practice range under real rules of engagement, catch your own attack in the logs, and write the detection that stops it.</p>
+              <div class="stops">Red Team rooms → Purple Team loop → <b>Purple Team Practitioner</b> capstone</div>
+            </article>
+            <article class="road">
+              <span class="num">ROAD 05</span>
+              <h3>Coder</h3>
+              <p>Write real Python, JavaScript, SQL, Java, and HTML/CSS in a working code lab — graded by running your code, never by guessing.</p>
+              <div class="stops">C64 warm-up → <b>5 Code Labs</b> → Build-to-spec Practicals → Junior Developer interview</div>
+            </article>
+            <article class="road">
+              <span class="num">ROAD 06</span>
+              <h3>AI Foundations</h3>
+              <p>Train a classifier with your own data, craft prompts until the output is right, then break a chatbot — and build the defense that holds.</p>
+              <div class="stops">What AI Is → Prompt Craft → <b>Break It, Then Defend It</b> → AI security door</div>
+            </article>
+            <article class="road">
+              <span class="num">ROAD 07</span>
+              <h3>Young Coders</h3>
+              <p>Start on a Commodore 64 blue screen: type PRINT, hit RUN, watch the machine obey — the way a generation of programmers began.</p>
+              <div class="stops"><b>Retro Roots: C64</b> → First programs → A game you wrote yourself → Python</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DIFFERENT ================= -->
+      <section id="different">
+        <div class="wrap">
+          <p class="kicker">The difference</p>
+          <h2>How The Roost is different</h2>
+          <p class="lede">
+            Anyone can read about this work and pass a quiz on it — then freeze the first time a
+            real ticket lands. The Roost is built so that can&rsquo;t happen here.
+          </p>
+          <div class="proof-list">
+            <div class="proof">
+              <div class="idx">01</div>
+              <div>
+                <h3>Roost Practicals gate every certificate</h3>
+                <p>
+                  Every certification is two parts: a knowledge exam <em>and</em> a hands-on practical
+                  under exam conditions — fix the broken rack, contain the incident, build the program
+                  to spec while the machine checks your work. <strong>Multiple choice is only the backup
+                  singer.</strong> Pass both halves or no certificate.
+                </p>
+              </div>
+            </div>
+            <div class="proof">
+              <div class="idx">02</div>
+              <div>
+                <h3>A tutor that never leaves you stuck</h3>
+                <p>
+                  Every room carries three levels of help — a nudge, a stronger hint, then a full
+                  plain-language walkthrough. Nobody hits a dead end and quits. And the less help you
+                  take, the more XP the work earns.
+                </p>
+              </div>
+            </div>
+            <div class="proof">
+              <div class="idx">03</div>
+              <div>
+                <h3>Real-life Missions</h3>
+                <p>
+                  Rooms teach skills; Missions test whether you can do the job. Work a simulated SOC
+                  shift — a phishing email, a 2 A.M. brute-force alert, a boss asking what happened —
+                  and get an <strong>End of Shift Report</strong> scored on Detection, Response,
+                  Communication, and Prioritization that sends you straight back to the room that
+                  trains your weak spot. Every attempt re-rolls the details, so nobody memorizes a score.
+                </p>
+              </div>
+            </div>
+            <div class="proof">
+              <div class="idx">04</div>
+              <div>
+                <h3>Mock interviews with a hard rule</h3>
+                <p>
+                  Sit a real interview for SOC Analyst, Help Desk, Junior Network Technician, Junior
+                  Penetration Tester, or Junior Developer — answered in your own words and scored.
+                  The rule: <strong>&ldquo;Job-Ready&rdquo; requires hands-on evidence</strong> — a passed
+                  Practical or a strong mission score. Talk a perfect game with no doing on your record
+                  and you cap at &ldquo;Nearly There,&rdquo; with a plan that sends you to the machines.
+                </p>
+              </div>
+            </div>
+            <div class="proof">
+              <div class="idx">05</div>
+              <div>
+                <h3>Certificates that hold up</h3>
+                <p>
+                  Passing issues a certificate with your name, the date, and a <strong>unique credential
+                  ID</strong> — plus a public verify page where an employer or a school can confirm it&rsquo;s
+                  real, and the exact fields to drop into LinkedIn&rsquo;s &ldquo;Add certification.&rdquo;
+                  Every certificate states it plainly: <em>earned by doing — includes hands-on performance
+                  assessment.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FOUNDER ================= -->
+      <section id="story">
+        <div class="wrap founder-grid">
+          <div>
+            <p class="kicker">Origin</p>
+            <h2>Where it all started</h2>
+            <p>
+              Our founder learned to program on a <strong>Commodore 64</strong>. No accounts, no
+              downloads, no forty-minute setup video — you typed <strong>PRINT</strong>, you typed
+              <strong>RUN</strong>, and the machine did the thing. Instantly. That first RUN is the
+              hook that makes a programmer.
+            </p>
+            <p>
+              So The Roost opens with that same blue screen — <strong>READY.</strong> — and a new
+              generation starts the way he did. Kids begin there, grow through Python and the Code
+              Labs, and can end up certified for real security jobs on the very same platform.
+            </p>
+            <p>
+              The front door nobody else built: fall in love with making the machine obey you first.
+              The career comes after.
+            </p>
+          </div>
+          <div class="c64" aria-hidden="true">
+            <div class="c64-screen">
+              <div class="center">**** COMMODORE 64 BASIC V2 ****</div>
+              <div class="center">64K RAM SYSTEM&nbsp;&nbsp;38911 BASIC BYTES FREE</div>
+              <br />
+              READY.<br />
+              <span class="typed" id="c64-line1"></span><br />
+              <span id="c64-out1"></span>
+              <span id="c64-ready2"></span>
+              <span class="typed" id="c64-line2"></span><br />
+              <span id="c64-out2"></span>
+              <span id="c64-ready3"></span><span class="c64-cursor"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FOR SCHOOLS ================= -->
+      <section id="schools">
+        <div class="wrap">
+          <p class="kicker">For Schools</p>
+          <h2>Built for classrooms. Free for schools.</h2>
+          <p class="lede">
+            The Roost gives teachers a hands-on coding and cybersecurity platform their students
+            actually finish — because students learn by doing the work, not by answering questions
+            about it.
+          </p>
+          <div class="schools-grid">
+            <article class="school-card">
+              <span class="num">FOR TEACHERS — 01</span>
+              <h3>A classroom in minutes</h3>
+              <p>
+                Create a class, students join with a code, and you&rsquo;re teaching. Assign rooms,
+                missions, and practicals with due dates, and watch progress, XP, and scores land on
+                <strong>one dashboard</strong> — printable reports included. It runs in a browser:
+                <strong>Chromebooks welcome, no installs, no lab machines to image.</strong>
+              </p>
+            </article>
+            <article class="school-card">
+              <span class="num">FOR TEACHERS — 02</span>
+              <h3>One platform, every level</h3>
+              <p>
+                The whole pipeline lives on one map. Young students start on the
+                <strong>Commodore 64 blue screen</strong> — safe, joyful, zero risk — grow into Python
+                and the Code Labs, and older students walk the career roads to cybersecurity
+                certificates and mock interviews. <strong>A student never outgrows it mid-year.</strong>
+              </p>
+            </article>
+            <article class="school-card">
+              <span class="num">FOR TEACHERS — 03</span>
+              <h3>Safe for minors, by design</h3>
+              <p>
+                Kids-track accounts have <strong>no public leaderboards and no public showcase</strong> —
+                student progress is visible to their teacher and parent only. No advertising. Student
+                sign-in is a name and a class code — <strong>no email required</strong> for classroom
+                students. Built with student privacy as a design rule, not an afterthought.
+              </p>
+            </article>
+            <article class="school-card">
+              <span class="num">FOR TEACHERS — 04</span>
+              <h3>Proof, not promises</h3>
+              <p>
+                Students earn certificates and badges <strong>gated on hands-on practicals</strong> —
+                and you see the evidence behind every one: what the student actually built, fixed,
+                and passed, per student. Exportable for <strong>portfolios and parent conferences</strong>,
+                so &ldquo;my student can do this&rdquo; comes with receipts.
+              </p>
+            </article>
+          </div>
+
+          <div class="pilot">
+            <p class="kicker">Pilot program</p>
+            <h3>The Founding Schools Pilot</h3>
+            <p>
+              The Roost is inviting a first cohort of schools to pilot free. Bring us a class,
+              run it for a term, and help shape what gets built next — while your students get
+              the hands-on experience other platforms only quiz them about.
+            </p>
+            <div class="pilot-list">
+              <div class="pilot-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Free for pilot schools</strong>One or two classes, a term-long run.</p>
+              </div>
+              <div class="pilot-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Teacher dashboard &amp; printable reports</strong>Progress, XP, and practical scores in one place.</p>
+              </div>
+              <div class="pilot-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Founder-supported onboarding</strong>The teacher gets set up with the founder, not a help-center maze.</p>
+              </div>
+              <div class="pilot-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>A feedback channel that shapes the product</strong>Pilot teachers tell us what their students need next — and we build it.</p>
+              </div>
+            </div>
+            <p class="pilot-line">If your students are the reason, <em>your school is who we built this for.</em></p>
+          </div>
+
+          <div class="edu-box">
+            <h3>Bring The Roost to your school</h3>
+            <p>Tell us who you are and how many students you teach. Pilot invitations go to educators first.</p>
+            <form class="edu-form" id="edu-form" action="https://formspree.io/f/xjywbveq" method="POST" novalidate>
+              <input type="hidden" name="form_source" value="schools-pilot" />
+              <input type="hidden" name="_subject" value="Roost Schools Pilot interest" />
+              <div>
+                <label for="edu-name">Educator name</label>
+                <input id="edu-name" name="educator-name" type="text" autocomplete="name" placeholder="e.g. Jordan Lee" required />
+              </div>
+              <div>
+                <label for="edu-school">School</label>
+                <input id="edu-school" name="school" type="text" autocomplete="organization" placeholder="Your school&rsquo;s name" required />
+              </div>
+              <div>
+                <label for="edu-role">Your role</label>
+                <select id="edu-role" name="role" required>
+                  <option value="">Choose your role</option>
+                  <option value="teacher">Teacher</option>
+                  <option value="counselor">Counselor</option>
+                  <option value="administrator">Administrator</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="edu-email">School email</label>
+                <input id="edu-email" name="school-email" type="email" autocomplete="email" placeholder="you@yourschool.edu" required />
+              </div>
+              <div>
+                <label for="edu-students">Approx. number of students</label>
+                <input id="edu-students" name="students" type="number" min="1" max="100000" inputmode="numeric" placeholder="e.g. 28" required />
+              </div>
+              <div class="full">
+                <label for="edu-message">Message <span style="text-transform:none; letter-spacing:0;">(optional)</span></label>
+                <textarea id="edu-message" name="message" placeholder="Grade levels, what you teach, when you&rsquo;d want to start — anything that helps us place your pilot."></textarea>
+              </div>
+              <p class="edu-error full" id="edu-error" role="alert"></p>
+              <button class="btn" type="submit">Request a pilot seat</button>
+            </form>
+            <div class="edu-done" id="edu-done" role="status">
+              <p class="big">✓ Received — we&rsquo;ll reach out to your school.</p>
+              <p id="edu-done-msg">Thank you for putting your students first. We&rsquo;ll be in touch at your school email address.</p>
+            </div>
+            <p class="edu-fine">Your entry is sent to The Roost via Formspree, and the founder receives it by email. He replies personally as pilot seats open — no automatic confirmation email is sent.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PLEDGE ================= -->
+      <section id="pledge">
+        <div class="wrap">
+          <div class="pledge">
+            <p class="kicker">Our pledge</p>
+            <h2>One honest price. No traps.</h2>
+            <p class="lede">
+              We read the complaints about the other platforms — the tier splits, the labs that lock
+              mid-path, the billing surprises. This is the deal, in writing, before you ever pay a cent.
+            </p>
+            <div class="pledge-grid">
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Beginner paths are free, end to end</strong>No starting a path for free and hitting a wall halfway through it.</p>
+              </div>
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>No lab timers</strong>Your practice time is yours. Nothing counts down while you&rsquo;re learning.</p>
+              </div>
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>No mid-path padlocks</strong>If a path is open to you, the whole path is open to you.</p>
+              </div>
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>One app, one account, one price</strong>No feature split across tiers you have to stack to get the whole thing.</p>
+              </div>
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Cancel in one click</strong>No retention maze, no chat-with-support gauntlet. One click and it&rsquo;s done.</p>
+              </div>
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>A reminder before any charge</strong>Renewals are announced before they happen — never discovered on a statement.</p>
+              </div>
+              <div class="pledge-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10.5 8 15.5 17 4.5" stroke="#3dff7a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p><strong>Updates included, forever.</strong>Every new path, mission, and upgrade ships to every member on the one plan. There is no higher tier to unlock the new stuff — that's the oldest trick in this business, and we don't play it.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= NUMBERS ================= -->
+      <div class="numbers">
+        <div class="wrap">
+          <div class="stat"><div class="big">13</div><div class="lbl">learning paths</div></div>
+          <div class="stat"><div class="big">30+</div><div class="lbl">hands-on rooms</div></div>
+          <div class="stat"><div class="big">5</div><div class="lbl">programming languages you learn by writing code</div></div>
+          <div class="stat"><div class="big">7</div><div class="lbl">roads to a job-ready showcase</div></div>
+        </div>
+      </div>
+
+      <!-- ================= WAITLIST ================= -->
+      <section id="waitlist">
+        <div class="wrap">
+          <div class="waitlist-box">
+            <p class="kicker">Early access</p>
+            <h2>Join the waitlist</h2>
+            <p>Public enrollment is coming, and the waitlist gets the first seats. Put your name down and be at the blue screen on day one.</p>
+            <form class="wl-form" id="wl-form" action="https://formspree.io/f/xjywbveq" method="POST" novalidate>
+              <input type="hidden" name="form_source" value="waitlist" />
+              <div>
+                <label for="wl-name">Your name</label>
+                <input id="wl-name" name="name" type="text" autocomplete="name" placeholder="e.g. Alex Rivera" required />
+              </div>
+              <div>
+                <label for="wl-email">Email</label>
+                <input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+              </div>
+              <p class="wl-error" id="wl-error" role="alert"></p>
+              <button class="btn" type="submit">Join the waitlist</button>
+            </form>
+            <div class="wl-done" id="wl-done" role="status">
+              <p class="big">✓ You&rsquo;re on the list.</p>
+              <p id="wl-done-msg">Welcome to The Roost. When public enrollment opens, your seat is at the front of the line.</p>
+            </div>
+            <p class="wl-fine">Your entry is sent to The Roost via Formspree, and the founder receives it by email. He replies personally when public enrollment opens — no automatic confirmation email is sent.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FAQ ================= -->
+      <section id="faq">
+        <div class="wrap">
+          <p class="kicker">Straight answers</p>
+          <h2>Questions, answered honestly</h2>
+          <p class="lede">No marketing fog. If there&rsquo;s a limit to what The Roost is, we say it here first.</p>
+          <div class="faq-list">
+            <details>
+              <summary>Is it free?</summary>
+              <div class="a"><p><strong>Beginner paths are free, full stop</strong> — free from the first room to the last, not free until the interesting part. That&rsquo;s written into Our Pledge above, along with no lab timers, no mid-path padlocks, and one honest price for everything beyond the free paths. And when paid plans arrive, every update stays included in the one plan.</p></div>
+            </details>
+            <details>
+              <summary>Do I need experience?</summary>
+              <div class="a"><p><strong>None.</strong> The First Flight Check places you at your real level, and the Commodore 64 path starts at absolute zero — a blue screen, a READY. prompt, and your first line of code in the first minute. If you can type, you can start.</p></div>
+            </details>
+            <details>
+              <summary>Are the certificates real?</summary>
+              <div class="a"><p>They are <strong>The Roost&rsquo;s own training credentials</strong> — earned by passing a knowledge exam <em>and</em> a hands-on practical, issued with a unique credential ID that anyone can check on our public verify page. Each certificate also names the industry exam it readies you for — Foundations and Blue Team point to CompTIA Security+, Networking to Network+ and CCST. Only CompTIA issues CompTIA&rsquo;s certificate, and we say so right on ours. Our job is to deliver you to that exam door ready.</p></div>
+            </details>
+            <details>
+              <summary>When does it open?</summary>
+              <div class="a"><p><strong>Public enrollment is coming.</strong> The platform is built and running; the waitlist gets the first seats when the doors open to everyone. Join the list above and you&rsquo;ll hear it from us first.</p></div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <div class="wrap">
+        <p class="foot-brand"><span>&gt;</span> THE ROOST</p>
+        <p>Built by a working student who got tired of platforms that test reading.</p>
+        <p class="foot-principle">You don&rsquo;t pass by knowing. You pass by <em>doing</em>.</p>
+        <div class="disclaimer">
+          <p>Disclaimer: The Roost is an educational platform. All labs, missions, and simulations run in fictional, self-contained environments built for learning. The skills taught here are for education and for authorized, lawful work only — never test, scan, or access any system you do not own or have explicit written permission to test. The Roost's certificates are its own training credentials and are not issued or endorsed by CompTIA, Cisco, or any other certification body; they document hands-on training completed here and point to the industry exams they prepare you for. Nothing on this page guarantees employment or exam results.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        /* ---------- C64 typing moment ---------- */
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var l1 = document.getElementById("c64-line1"),
+            o1 = document.getElementById("c64-out1"),
+            r2 = document.getElementById("c64-ready2"),
+            l2 = document.getElementById("c64-line2"),
+            o2 = document.getElementById("c64-out2"),
+            r3 = document.getElementById("c64-ready3");
+        var cmd1 = 'PRINT "HELLO, WORLD"';
+        var cmd2 = "10 FOR I=1 TO 3: PRINT \"ROOST!\": NEXT I";
+        function setFinal() {
+          l1.textContent = cmd1;
+          o1.innerHTML = "HELLO, WORLD<br />";
+          r2.innerHTML = "READY.<br />";
+          l2.textContent = cmd2;
+          o2.innerHTML = "ROOST!<br />ROOST!<br />ROOST!<br />";
+          r3.innerHTML = "READY.<br />";
+        }
+        if (reduce || !l1) {
+          setFinal();
+        } else {
+          var steps = [];
+          cmd1.split("").forEach(function (ch) { steps.push(function () { l1.textContent += ch; }); });
+          steps.push(function () { o1.innerHTML = "HELLO, WORLD<br />"; r2.innerHTML = "READY.<br />"; });
+          cmd2.split("").forEach(function (ch) { steps.push(function () { l2.textContent += ch; }); });
+          steps.push(function () { l2.innerHTML += "<br />RUN"; });
+          steps.push(function () { o2.innerHTML = "ROOST!<br />ROOST!<br />ROOST!<br />"; r3.innerHTML = "READY.<br />"; });
+          var i = 0;
+          var started = false;
+          function tick() {
+            if (i >= steps.length) return;
+            steps[i++]();
+            setTimeout(tick, i < cmd1.length + 1 ? 55 : 34);
+          }
+          function start() { if (!started) { started = true; setTimeout(tick, 500); } }
+          if ("IntersectionObserver" in window) {
+            var io = new IntersectionObserver(function (entries) {
+              if (entries[0].isIntersecting) { start(); io.disconnect(); }
+            }, { threshold: 0.35 });
+            io.observe(l1.closest(".c64"));
+          } else { start(); }
+        }
+
+        /* ---------- Waitlist (sent to The Roost via Formspree) ---------- */
+        var FORMSPREE = "https://formspree.io/f/xjywbveq";
+        var form = document.getElementById("wl-form");
+        var done = document.getElementById("wl-done");
+        var err = document.getElementById("wl-error");
+        var doneMsg = document.getElementById("wl-done-msg");
+        function sendToFormspree(formEl) {
+          return fetch(FORMSPREE, {
+            method: "POST",
+            body: new FormData(formEl),
+            headers: { "Accept": "application/json" }
+          }).then(function (res) {
+            if (!res.ok) { throw new Error("Formspree rejected the submission"); }
+            return res;
+          });
+        }
+        function showDone(name) {
+          form.style.display = "none";
+          done.style.display = "block";
+          if (name) {
+            doneMsg.textContent = "Welcome to The Roost, " + name + ". When public enrollment opens, your seat is at the front of the line.";
+          }
+        }
+        if (form) {
+          var wlBtn = form.querySelector('button[type="submit"]');
+          var wlBtnLabel = wlBtn ? wlBtn.textContent : "";
+          form.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            var name = document.getElementById("wl-name").value.trim();
+            var email = document.getElementById("wl-email").value.trim();
+            err.style.display = "none";
+            if (!name) {
+              err.textContent = "Add your name so we know what to call you at the blue screen.";
+              err.style.display = "block";
+              return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+              err.textContent = "That email doesn\u2019t look complete — check it and try again.";
+              err.style.display = "block";
+              return;
+            }
+            if (wlBtn) { wlBtn.disabled = true; wlBtn.textContent = "Joining\u2026"; }
+            sendToFormspree(form).then(function () {
+              showDone(name.split(" ")[0]);
+            }).catch(function () {
+              if (wlBtn) { wlBtn.disabled = false; wlBtn.textContent = wlBtnLabel; }
+              err.textContent = "That didn\u2019t go through — your entry wasn\u2019t sent. Check your connection, then tap \u201CJoin the waitlist\u201D again to retry.";
+              err.style.display = "block";
+            });
+          });
+        }
+
+        /* ---------- Educator / pilot interest (sent to The Roost via Formspree) ---------- */
+        var eduForm = document.getElementById("edu-form");
+        var eduDone = document.getElementById("edu-done");
+        var eduErr = document.getElementById("edu-error");
+        var eduDoneMsg = document.getElementById("edu-done-msg");
+        if (eduForm) {
+          var eduBtn = eduForm.querySelector('button[type="submit"]');
+          var eduBtnLabel = eduBtn ? eduBtn.textContent : "";
+          eduForm.addEventListener("submit", function (ev) {
+            ev.preventDefault();
+            var eduName = document.getElementById("edu-name").value.trim();
+            var school = document.getElementById("edu-school").value.trim();
+            var role = document.getElementById("edu-role").value;
+            var eduEmail = document.getElementById("edu-email").value.trim();
+            var students = document.getElementById("edu-students").value.trim();
+            eduErr.style.display = "none";
+            function eduFail(msg) { eduErr.textContent = msg; eduErr.style.display = "block"; }
+            if (!eduName) { eduFail("Add your name so we know who to reach out to."); return; }
+            if (!school) { eduFail("Add your school so we can place your pilot."); return; }
+            if (!role) { eduFail("Choose your role — teacher, counselor, administrator, or other."); return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(eduEmail)) { eduFail("That school email doesn\u2019t look complete — check it and try again."); return; }
+            var studentCount = parseInt(students, 10);
+            if (!students || isNaN(studentCount) || studentCount < 1) { eduFail("Add an approximate number of students — a rough count is fine."); return; }
+            if (eduBtn) { eduBtn.disabled = true; eduBtn.textContent = "Sending\u2026"; }
+            sendToFormspree(eduForm).then(function () {
+              eduForm.style.display = "none";
+              eduDone.style.display = "block";
+              eduDoneMsg.textContent = "Thank you, " + eduName.split(" ")[0] + " — we\u2019ll reach out to " + school + " at your school email address as pilot seats open.";
+            }).catch(function () {
+              if (eduBtn) { eduBtn.disabled = false; eduBtn.textContent = eduBtnLabel; }
+              eduFail("That didn\u2019t go through — your entry wasn\u2019t sent. Check your connection, then tap \u201CRequest a pilot seat\u201D again to retry.");
+            });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
